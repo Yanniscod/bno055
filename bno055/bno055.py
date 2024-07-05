@@ -155,15 +155,13 @@ def main(args=None):
         rclpy.spin(node)
 
     except KeyboardInterrupt:
-        node.get_logger().info('Ctrl+C received - exiting...')
         sys.exit(0)
     finally:
-        node.get_logger().info('ROS node shutdown')
         try:
             node.destroy_timer(data_query_timer)
             node.destroy_timer(status_timer)
         except UnboundLocalError:
-            node.get_logger().info('No timers to shutdown')
+            pass
         node.destroy_node()
         rclpy.shutdown()
 
