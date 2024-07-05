@@ -154,12 +154,16 @@ def main(args=None):
 
         rclpy.spin(node)
 
+    except KeyboardInterrupt:
+        sys.exit(0)
     finally:
         try:
             node.destroy_timer(data_query_timer)
             node.destroy_timer(status_timer)
-        except KeyboardInterrupt:
-            node.destroy_node()
+        except UnboundLocalError:
+            pass
+        node.destroy_node()
+
 
 if __name__ == '__main__':
     main()
